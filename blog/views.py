@@ -7,3 +7,8 @@ def home_page(request):
     context = {'articles': articles}
     return render(request, 'home_page.html', context)
 
+
+def article_page(request, slug):
+    article = Article.objects.get(slug=slug)
+    context = {'article': article}
+    return render(request, 'article_page.html', context)
