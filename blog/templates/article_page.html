@@ -1,9 +1,12 @@
-<html>
-    <title>Сайт Алексея Куличевского</title>
+{% extends 'base.html' %}
+
+{% block title %}Сайт Алексея Куличевского{% endblock %}
+
+{% block content %}
     <h1>Алексей Куличевский</h1>
 
     <div class="article">
         <h2 class="article-title">{{ article.title }}</h2>
         <p class="article-text">{{ article.full_text }}</p>
     </div>
-</html>
+{% endblock %}
