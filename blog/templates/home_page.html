@@ -1,34 +1,21 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Сайт    Алексея Куличевского{% endblock %}
 
-{% block content %}
-
-    <div class="container">
-        <div class="blog">
-        <div class="row">
-            <div class="col">
-                <div class="avatar">
-                    <span class="author-name">Алексей Куличевский</span>
+{% block content %}    
+    <div class="row">
+        <div class="col-md-8 col-sm-12">
+            <div class="article-list">
+                {% for article in articles %}
+                    <div class="article">
+                        <h2 class="article-title">
+                            <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                        </h2>
+                        <p class="article-summary">{{ article.summary }}</p>
+                    </div>
+                {% endfor %}
             </div>
         </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-sm-12">
-                <div class="article-list">
-                    {% for article in articles %}
-                        <div class="article">
-                            <h2 class="article-title">
-                                <a class="article-title-a" href="{{ article.get_absolute_url }}">{{ article.title }}</a>
-                            </h2>
-                            <p class="article-summary">{{ article.summary }}</p>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-        </div>
-
-        
     </div>
 {% endblock %}  
