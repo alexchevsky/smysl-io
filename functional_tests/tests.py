@@ -4,6 +4,7 @@ from django.test import LiveServerTestCase
 from blog.models import Article
 from datetime import datetime
 import pytz
+import os
 
 class BasicInstallTest(LiveServerTestCase):
 # Жил был Вася
@@ -13,6 +14,10 @@ class BasicInstallTest(LiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Chrome()
+        staging_server = os.environ.get('STAGING_SERVER')
+        if staging_server:
+            self.live_server_url = 'http://' + staging_server
+
         Article.objects.create(
             title='title 1',
             summary='summary 1',
@@ -40,8 +45,8 @@ class BasicInstallTest(LiveServerTestCase):
         self.browser.get(self.live_server_url)
         self.browser.set_window_size(1024, 768)
 
-        header = self.browser.find_element(By.TAG_NAME, 'h1')
-        self.assertTrue(header.location['x'] > 10)
+        footer = self.browser.find_element(By.CLASS_NAME, 'footer')
+        self.assertTrue(footer.location['y'] > 500)
 
     def test_home_page_blog(self):
         # Под шапкой раположен блог со статьями.
