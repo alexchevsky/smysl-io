@@ -80,6 +80,16 @@ class BlogTests(LiveServerTestCase):
 
         self.assertEqual(article_title_text, article_page_title.text)
 
+    def test_python_landing_redirect(self):
+        self.browser.get(self.live_server_url + '/python')
+        self.assertIn('Python для маркетологов и продактов',
+                      self.browser.title)
+
+    def test_python_landing_redirect(self):
+        self.browser.get(self.live_server_url + '/setup')
+        self.assertIn('Настройка Python для работы с данными',
+                      self.browser.title)
+
 
 
 # self.fail('Finish the test!')

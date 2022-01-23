@@ -1,12 +1,14 @@
 ---
 
 - hosts: all
+  gather_facts: no
   vars:
-      host: "staging.smysl.io"
+      host: "{{ inventory_hostname }}"
       ansible_user: "ak"
   tasks:
   # Устанавливаем python3.9 + python3.9-venv, git, nginx, gunicorn
     - name: Deadsnakes PPA to get Python 3.9
+      become: yes
       apt_repository:
         repo='ppa:deadsnakes/ppa'
 
@@ -88,7 +90,7 @@
       tags:
         - dotenv
 
-  handlers:
+  handlers:   
     - name: Restart nginx
       service:  name=nginx state=restarted
 
