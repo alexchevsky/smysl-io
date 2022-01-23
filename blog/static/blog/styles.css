@@ -190,6 +190,10 @@ td, th {
     margin-top: -3px;
   }
 
+  body .gist .blob-code-inner {
+    font-size: 1em;
+  }
+
   table {
     width: 100%;
   }
