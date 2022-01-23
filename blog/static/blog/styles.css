@@ -13,7 +13,6 @@
 }
 
 
-
 html {
   position: relative;
   min-height: 100%;
@@ -101,7 +100,6 @@ body .gist .gist-file, body .gist .gist-file .gist-data {
   background-color: #fdf6e3;
 }
 
-
 body .gist .gist-file {
   padding: 1rem;
   background-color: #fdf6e3;
@@ -109,7 +107,6 @@ body .gist .gist-file {
 
 body .gist .blob-wrapper {
   background-color: #fdf6e3;
-  /* background-color: red; */
   padding: 10em 0 10em .5rem;
   overflow-x: scroll;
 }
@@ -127,7 +124,6 @@ body .gist .blob-code-inner {
   font-size: .9rem;
   line-height: inherit;
 }
-
 
 table {
   border-spacing: 0;
@@ -171,18 +167,38 @@ td, th {
   color: #ccc;
 }
 
-@media only screen and (max-width: 960px){
-  table {
-    width: 100%;
-  }
-}
+/* @media only screen and (max-width: 960px){ */
+@media all and (min-device-width:0px) and (max-device-width: 568px) {
 
-@media only screen and (min-width: 576px){
   body {
     font-size: 30px;
   }
 
-  div.container {
-    margin-left: 2em;
+  div.container-lg {
+    padding-left: 1em;
+    padding-right: 2em;
+  }
+
+  .page-header {
+    height: 5em;
+  }
+
+  h1.avatar-top img {
+    width: 40px;
+    margin-right: .2em;
+    clip-path: circle(19px at center);
+    margin-top: -3px;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  tr {
+    font-size: 1.2em;
+  }
+  
+  th {
+    font-size: 1.2em;
   }
 }
