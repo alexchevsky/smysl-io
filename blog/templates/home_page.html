@@ -10,7 +10,7 @@
                 {% for article in articles %}
                     <div class="article">
                         <h1 class="article-title">
-                            <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                            <a href="{{ article.get_absolute_url }}">{{ article.title | safe }}</a>
                         </h1>
                         <div class="article-text">{{ article.full_text | safe }}</div>
                     </div>
