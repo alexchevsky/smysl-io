@@ -38,7 +38,7 @@ h1, h2, h3 {
 
 
 h1 {
-  font-size: 1.5em;
+  font-size: 1.8em;
 }
 
 h2 {
@@ -72,16 +72,16 @@ h1.avatar-top img {
   margin-bottom: 3em;
 }
 
-h2.article-title {
-  margin-bottom: .1em;
+h1.article-title {
+  margin-bottom: 1em;
 }
 
-h2.article-title a {
+h1.article-title a {
   text-decoration: none;
   color: #333;
 }
 
-h2.article-title a:hover {
+h1.article-title a:hover {
   color: #555;
 }
 

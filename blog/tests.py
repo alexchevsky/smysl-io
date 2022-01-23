@@ -52,13 +52,13 @@ class HomePageTest(TestCase):
 
         self.assertIn('title 1', html)
         self.assertIn('/blog/slug-1', html)
-        self.assertIn('summary 1', html)
-        self.assertNotIn('full_text 1', html)
+        self.assertNotIn('summary 1', html)
+        self.assertIn('full_text 1', html)
 
         self.assertIn('title 2', html)
         self.assertIn('/blog/slug-2', html)
-        self.assertIn('summary 2', html)
-        self.assertNotIn('full_text 2', html)
+        self.assertNotIn('summary 2', html)
+        self.assertIn('full_text 2', html)
 
     def test_home_page_returns_correct_html(self):
         url = reverse('home_page')

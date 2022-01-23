@@ -6,7 +6,7 @@ from datetime import datetime
 import pytz
 import os
 
-class BasicInstallTest(LiveServerTestCase):
+class BlogTests(LiveServerTestCase):
 # Жил был Вася
 # Вася работает аналитиком в какой-то компании
 # Однажды Вася захотел прокачаться в когортном анализе
@@ -59,10 +59,10 @@ class BasicInstallTest(LiveServerTestCase):
         self.browser.get(self.live_server_url)
         article_title = self.browser.find_element(By.CLASS_NAME,
                                                   'article-title')
-        article_summary = self.browser.find_element(By.CLASS_NAME,
-                                                    'article-summary')
+        article_text = self.browser.find_element(By.CLASS_NAME,
+                                                    'article-text')
         self.assertTrue(article_title)
-        self.assertTrue(article_summary)
+        self.assertTrue(article_text)
 
     def test_home_page_article_title_link_leads_to_article_page(self):
         # Вася кликнул по заголовку и у него открылась страница
