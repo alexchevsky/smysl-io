@@ -69,15 +69,30 @@ class BlogTests(LiveServerTestCase):
         # с полным текстом статьи
         self.browser.get(self.live_server_url)
         article_title = self.browser.find_element(By.CLASS_NAME,
-            'article-title')
+                                                  'article-title')
         article_title_text = article_title.text
 
         # находим ссылку в заголовке статьи
         article_link = article_title.find_element(By.TAG_NAME, 'a')
         self.browser.get(article_link.get_attribute('href'))
         article_page_title = self.browser.find_element(By.CLASS_NAME,
-            'article-title')
+                                                       'article-title')
+        self.assertEqual(article_title_text, article_page_title.text)
 
+    def test_article_link_without_slash_works(self):
+        self.browser.get(self.live_server_url)
+        article_title = self.browser.find_element(By.CLASS_NAME,
+                                                  'article-title')
+        article_title_text = article_title.text
+        article_link = article_title.find_element(By.TAG_NAME, 'a')
+
+        # added a slash to the link address
+        href = article_link.get_attribute('href')
+        if href[-1] == '/':
+            href = href[:-1]  # removing trailing slash
+        self.browser.get(href)
+        article_page_title = self.browser.find_element(By.CLASS_NAME,
+                                                       'article-title')
         self.assertEqual(article_title_text, article_page_title.text)
 
     def test_python_landing_redirect(self):
@@ -85,10 +100,11 @@ class BlogTests(LiveServerTestCase):
         self.assertIn('Python для маркетологов и продактов',
                       self.browser.title)
 
-    def test_python_landing_redirect(self):
+    def test_setup_landing_redirect(self):
         self.browser.get(self.live_server_url + '/setup')
         self.assertIn('Настройка Python для работы с данными',
                       self.browser.title)
+
 
 
 

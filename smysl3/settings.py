@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'blog',
 ]
 
+APPEND_SLASH = True
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

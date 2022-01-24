@@ -21,7 +21,7 @@ from courses.views import python_redirect, setup_redirect
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_page, name='home_page'),
-    path('blog/<slug:slug>', article_page, name='article_page'),
+    path('blog/<slug:slug>/', article_page, name='article_page'),
     path('python/', python_redirect, name='python_redirect'),
     path('setup/', setup_redirect, name='setup_redirect'),
 ]
