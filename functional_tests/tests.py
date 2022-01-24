@@ -39,7 +39,7 @@ class BlogTests(LiveServerTestCase):
     def test_home_page_header(self):
         # В шапке сайта написано "Алексей Куличевский"
         self.browser.get(self.live_server_url)
-        header = self.browser.find_element(By.TAG_NAME, 'h1')
+        header = self.browser.find_element(By.CLASS_NAME, 'avatar-top')
         self.assertIn('Алексей Куличевский', header.text)
 
     def test_layout_and_styling(self):
@@ -112,7 +112,8 @@ class BlogTests(LiveServerTestCase):
         page_header = self.browser.find_element(
             By.CLASS_NAME,
             'avatar-top')
-        href_back = page_header.find_element(By.TAG_NAME, 'a')
+        href_back = page_header.find_element(
+            By.TAG_NAME, 'a').get_attribute('href')[:-1]  # remove slash
         self.assertEqual(href_back, self.live_server_url)
 
     def test_python_landing_redirect(self):

@@ -3,6 +3,13 @@
 
 {% block title %}Сайт Алексея Куличевского{% endblock %}
 
+{% block page_header %}
+<a href="{% url 'home_page' %}">
+    <img src="{% static 'img/avatar.jpeg' %}" />
+    <span class="author-name">Алексей Куличевский</span>
+</a>
+{% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="col-md-12 col-lg-8">
