@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from django.test import LiveServerTestCase
 from blog.models import Article
+from django.urls import reverse
 from datetime import datetime
 import pytz
 import os
@@ -107,14 +108,17 @@ class BlogTests(LiveServerTestCase):
         # На странице статьи Вася кликнул по заголовку в шапке сайта
         # и попал на главную страницу
         self.browser.get(self.live_server_url)
+        initial_url = self.browser.current_url
         href = self.find_href_to_article()
         self.browser.get(href)
         page_header = self.browser.find_element(
             By.CLASS_NAME,
             'avatar-top')
         href_back = page_header.find_element(
-            By.TAG_NAME, 'a').get_attribute('href')[:-1]  # remove slash
-        self.assertEqual(href_back, self.live_server_url)
+            By.TAG_NAME, 'a').get_attribute('href')
+        self.browser.get(href_back)
+        final_url = self.browser.current_url
+        self.assertEqual(initial_url, final_url)
 
     def test_python_landing_redirect(self):
         self.browser.get(self.live_server_url + '/python')
