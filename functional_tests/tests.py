@@ -12,6 +12,7 @@ class BlogTests(LiveServerTestCase):
 # Однажды Вася захотел прокачаться в когортном анализе
 # Вася зашел в Гугл, ввел запрос "Когортный анализ" и кликнул по одной из ссылок
 
+
     def setUp(self):
         self.browser = webdriver.Chrome()
         staging_server = os.environ.get('STAGING_SERVER')
@@ -57,43 +58,62 @@ class BlogTests(LiveServerTestCase):
     def test_home_page_articles_look_correct(self):
         # У каждой статьи есть заголовок и один абзац с текстом
         self.browser.get(self.live_server_url)
-        article_title = self.browser.find_element(By.CLASS_NAME,
-                                                  'article-title')
-        article_text = self.browser.find_element(By.CLASS_NAME,
-                                                    'article-text')
+        article_title = self.browser.find_element(
+            By.CLASS_NAME,
+            'article-title')
+        article_text = self.browser.find_element(
+            By.CLASS_NAME,
+            'article-text')
         self.assertTrue(article_title)
         self.assertTrue(article_text)
+
+    def find_href_to_article(self):
+        article_title = self.browser.find_element(
+            By.CLASS_NAME,
+            'article-title')
+        article_link = article_title.find_element(By.TAG_NAME, 'a')
+        return article_link.get_attribute('href')
 
     def test_home_page_article_title_link_leads_to_article_page(self):
         # Вася кликнул по заголовку и у него открылась страница
         # с полным текстом статьи
         self.browser.get(self.live_server_url)
-        article_title = self.browser.find_element(By.CLASS_NAME,
-                                                  'article-title')
-        article_title_text = article_title.text
-
-        # находим ссылку в заголовке статьи
-        article_link = article_title.find_element(By.TAG_NAME, 'a')
-        self.browser.get(article_link.get_attribute('href'))
-        article_page_title = self.browser.find_element(By.CLASS_NAME,
-                                                       'article-title')
+        article_title_text = self.browser.find_element(
+            By.CLASS_NAME,
+            'article-title').text
+        href = self.find_href_to_article()
+        self.browser.get(href)
+        article_page_title = self.browser.find_element(
+            By.CLASS_NAME,
+            'article-title')
         self.assertEqual(article_title_text, article_page_title.text)
 
     def test_article_link_without_slash_works(self):
+        # Вася случайно удалил / из ссылки, ведущей на статью,
+        # но статья все равно открылась
         self.browser.get(self.live_server_url)
-        article_title = self.browser.find_element(By.CLASS_NAME,
-                                                  'article-title')
-        article_title_text = article_title.text
-        article_link = article_title.find_element(By.TAG_NAME, 'a')
-
-        # added a slash to the link address
-        href = article_link.get_attribute('href')
+        article_title_text = self.browser.find_element(
+            By.CLASS_NAME,
+            'article-title').text
+        href = self.find_href_to_article()
         if href[-1] == '/':
             href = href[:-1]  # removing trailing slash
         self.browser.get(href)
         article_page_title = self.browser.find_element(By.CLASS_NAME,
                                                        'article-title')
         self.assertEqual(article_title_text, article_page_title.text)
+
+    def test_article_page_header_has_link_that_leads_to_home(self):
+        # На странице статьи Вася кликнул по заголовку в шапке сайта
+        # и попал на главную страницу
+        self.browser.get(self.live_server_url)
+        href = self.find_href_to_article()
+        self.browser.get(href)
+        page_header = self.browser.find_element(
+            By.CLASS_NAME,
+            'avatar-top')
+        href_back = page_header.find_element(By.TAG_NAME, 'a')
+        self.assertEqual(href_back, self.live_server_url)
 
     def test_python_landing_redirect(self):
         self.browser.get(self.live_server_url + '/python')
@@ -121,5 +141,3 @@ class BlogTests(LiveServerTestCase):
 # попал обратно на главную страницу.
 
 # Некоторые статьи есть в админке, но они не опубликованы
-
-# Статьи открываются с красивым коротким адресом
