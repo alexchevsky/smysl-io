@@ -3,7 +3,7 @@ from .models import Article
 
 
 def home_page(request):
-    articles = Article.objects.all()
+    articles = Article.objects.order_by('-pubdate')
     context = {'articles': articles}
     return render(request, 'home_page.html', context)
 
