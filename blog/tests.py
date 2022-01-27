@@ -1,4 +1,4 @@
-from django.urls import resolve
+from django.core.files import File
 from django.test import TestCase
 from blog.views import home_page, article_page
 from blog.models import Article
@@ -77,7 +77,8 @@ class ArticleModelTest(TestCase):
             summary='summary 1',
             categery='category 1',
             pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
-            slug='slug-1'
+            slug='slug-1',
+            og_image=File(open('test_images/test_image_1.png', 'rb'))
         )
         article1.save()
 
@@ -89,7 +90,8 @@ class ArticleModelTest(TestCase):
             summary='summary 2',
             categery='category 2',
             pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
-            slug='slug-2'
+            slug='slug-2',
+            og_image=File(open('test_images/test_image_2.png', 'rb'))
         )
         article2.save()
 
@@ -107,6 +109,12 @@ class ArticleModelTest(TestCase):
             all_articles[0].slug,
             article1.slug
         )
+
+        self.assertEqual(
+            all_articles[0].og_image,
+            article1.og_image
+        )
+
         # проверь: вторая загруженная из базы статья == статья 2
         self.assertEqual(
             all_articles[1].title,
@@ -115,4 +123,9 @@ class ArticleModelTest(TestCase):
         self.assertEqual(
             all_articles[1].slug,
             article2.slug
+        )
+
+        self.assertEqual(
+            all_articles[1].og_image,
+            article2.og_image
         )
