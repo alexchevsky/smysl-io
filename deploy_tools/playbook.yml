@@ -90,13 +90,13 @@
       tags:
         - dotenv
 
-  handlers:   
-    - name: Restart nginx
-      service:  name=nginx state=restarted
-
     - name: Restart gunicorn
       systemd:
         name=gunicorn-{{ host }}
         daemon_reload=yes
         enabled=yes
         state=restarted
+
+  handlers:   
+    - name: Restart nginx
+      service:  name=nginx state=restarted
