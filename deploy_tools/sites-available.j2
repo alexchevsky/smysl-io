@@ -6,6 +6,10 @@ server {
         alias /home/{{ ansible_user }}/sites/{{ host }}/static;
     }
 
+    location /media {
+        alias /home/{{ ansible_user }}/sites/{{ host }}/media;
+    }
+
     location / {
         proxy_pass http://unix:/tmp/{{ host }}.socket;
         proxy_set_header Host $host;
