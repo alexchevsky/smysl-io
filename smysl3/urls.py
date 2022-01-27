@@ -15,6 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+
 from blog.views import home_page, article_page
 from courses.views import python_redirect, setup_redirect
 
@@ -25,3 +28,8 @@ urlpatterns = [
     path('python/', python_redirect, name='python_redirect'),
     path('setup/', setup_redirect, name='setup_redirect'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT)
