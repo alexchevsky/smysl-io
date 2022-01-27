@@ -8,13 +8,13 @@ class GalleryModelTest(TestCase):
     def test_gallery_model_save_and_retrieve(self):
         image1 = Image(
             title='image 1',
-            image=File(open('gallery/test_images/test_image_1.png', 'rb'))
+            image=File(open('test_images/test_image_1.png', 'rb'))
         )
         image1.save()
 
         image2 = Image(
             title='image 2',
-            image=File(open('gallery/test_images/test_image_2.png', 'rb'))
+            image=File(open('test_images/test_image_2.png', 'rb'))
         )
         image2.save()
 
