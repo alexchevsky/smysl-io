@@ -81,7 +81,7 @@ class HomePageTest(TestCase):
         response = home_page(request)
         html = response.content.decode('utf8')
 
-        self.assertTrue(html.find('title 1') < html.find('title 2'))
+        self.assertTrue(html.find('title 1') > html.find('title 2'))
 
     def test_home_page_returns_correct_html(self):
         url = reverse('home_page')
