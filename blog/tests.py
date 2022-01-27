@@ -16,11 +16,12 @@ class ArticlePageTest(TestCase):
             summary='summary 1',
             full_text='full_text 1',
             pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
-            slug='ooo-lya-lya'
+            slug='ooo-lya-lya',
+            og_image=File(open('test_images/test_image_1.png', 'rb'))
         )
 
-        request = HttpRequest()
-        response = article_page(request, 'ooo-lya-lya')
+        url = reverse('article_page', kwargs={'slug': 'ooo-lya-lya'})
+        response = self.client.get(url)
         html = response.content.decode('utf8')
 
         self.assertIn('title 1', html)
@@ -59,6 +60,28 @@ class HomePageTest(TestCase):
         self.assertIn('/blog/slug-2', html)
         self.assertNotIn('summary 2', html)
         self.assertIn('full_text 2', html)
+
+    def test_home_page_displays_articles_in_correct_order(self):
+        Article.objects.create(
+            title='title 1',
+            summary='summary 1',
+            full_text='full_text 1',
+            pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
+            slug='slug-1'
+        )
+        Article.objects.create(
+            title='title 2',
+            summary='summary 2',
+            full_text='full_text 2',
+            pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
+            slug='slug-2'
+        )
+
+        request = HttpRequest()
+        response = home_page(request)
+        html = response.content.decode('utf8')
+
+        self.assertTrue(html.find('title 1') < html.find('title 2'))
 
     def test_home_page_returns_correct_html(self):
         url = reverse('home_page')
