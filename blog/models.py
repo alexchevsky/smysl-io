@@ -9,6 +9,7 @@ class Article(models.Model):
     categery = models.CharField(max_length=255)
     pubdate = models.DateTimeField()
     slug = models.CharField(max_length=255, unique=True)
+    og_image = models.ImageField(upload_to='images', null=True)
     # is_published = models.BooleanField() #TODO
 
     def __str__(self):
