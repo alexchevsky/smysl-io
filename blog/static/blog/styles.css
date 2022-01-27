@@ -26,6 +26,10 @@ body {
   margin-bottom: 60px; /* Margin bottom by footer height */
 }
 
+strong {
+  font-family: graphik-black, Arial, Helvetica, sans-serif;
+}
+
 .page-header {
   height: 9em;
   margin-left: -20px;
@@ -37,17 +41,19 @@ h1, h2, h3 {
 
 
 h1 {
-  font-size: 1.8em;
+  font-size: 2em;
 }
 
 h2 {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
+  margin-top: 2em;
+  margin-bottom: 1em;
   font-size: 1.3em;
 }
 
 h3 {
-  font-size: 1.1em;
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+  font-size: 1.05em;
 }
 
 h4, h5, h6 {
@@ -72,6 +78,30 @@ h4, h5, h6 {
   margin-top: -3px;
 }
 
+.article-image {
+  width: 100%;
+
+}
+
+.image-caption {
+  font-size: .7em;
+  /* font-style: italic; */
+  text-align: center;
+  margin-top: 1em;
+}
+
+.quote {
+  padding-left: 1em;
+  font-style: italic;
+  font-size: 1em;
+  line-height: 1.8em;
+  border-left: .5em solid #fdf6e3;
+}
+
+.vertical-space {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
 
 .article {
   margin-bottom: 3em;
