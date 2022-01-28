@@ -203,6 +203,11 @@ td, th {
   color: #ccc;
 }
 
+.dummy {
+  height: 5em;
+  /* border: 1px solid red; */
+}
+
 /* @media only screen and (max-width: 960px){ */
 @media all and (min-device-width:0px) and (max-device-width: 568px) {
 
