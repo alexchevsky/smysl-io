@@ -30,7 +30,7 @@ class BlogTests(LiveServerTestCase):
             full_text='full_text 1',
             pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
             slug='title-1',
-            category='category_1',
+            category='category-1',
             og_image=File(open('test_images/test_image_1.png', 'rb'))
         )
         Article.objects.create(
@@ -39,7 +39,7 @@ class BlogTests(LiveServerTestCase):
             full_text='full_text 2',
             pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
             slug='slug-2',
-            category='category_1',
+            category='category-1',
             og_image=File(open('test_images/test_image_1.png', 'rb'))
         )
         Article.objects.create(
@@ -48,49 +48,49 @@ class BlogTests(LiveServerTestCase):
             full_text='full_text 3',
             pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
             slug='slug-3',
-            category='category_2',
+            category='category-2',
             og_image=File(open('test_images/test_image_2.png', 'rb'))
         )
 
     def tearDown(self):
         self.browser.quit()
 
-    # def test_home_page_title(self):
-    #     # В браузере Васи открылся сайт (по адресу http://127.0.0.1:8000)
-    #     # В заголовке сайта Вася прочитал "Сайт Алексея Куличевского"
-    #     self.browser.get(self.live_server_url)
-    #     self.assertIn('Сайт Алексея Куличевского', self.browser.title)
+    def test_home_page_title(self):
+        # В браузере Васи открылся сайт (по адресу http://127.0.0.1:8000)
+        # В заголовке сайта Вася прочитал "Сайт Алексея Куличевского"
+        self.browser.get(self.live_server_url)
+        self.assertIn('Сайт Алексея Куличевского', self.browser.title)
 
-    # def test_home_page_header(self):
-    #     # В шапке сайта написано "Алексей Куличевский"
-    #     self.browser.get(self.live_server_url)
-    #     header = self.browser.find_element(By.CLASS_NAME, 'avatar-top')
-    #     self.assertIn('Алексей Куличевский', header.text)
+    def test_home_page_header(self):
+        # В шапке сайта написано "Алексей Куличевский"
+        self.browser.get(self.live_server_url)
+        header = self.browser.find_element(By.CLASS_NAME, 'avatar-top')
+        self.assertIn('Алексей Куличевский', header.text)
 
-    # def test_layout_and_styling(self):
-    #     self.browser.get(self.live_server_url)
-    #     self.browser.set_window_size(1024, 768)
+    #  TODO this test is incorrect
+    def test_layout_and_styling(self):
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024, 768)
+        footer = self.browser.find_element(By.CLASS_NAME, 'footer')
+        self.assertTrue(footer.location['y'] > 500)
 
-    #     footer = self.browser.find_element(By.CLASS_NAME, 'footer')
-    #     self.assertTrue(footer.location['y'] > 500)
+    def test_home_page_blog(self):
+        # Под шапкой раположен блог со статьями.
+        self.browser.get(self.live_server_url)
+        article_list = self.browser.find_element(By.CLASS_NAME, 'article-list')
+        self.assertTrue(article_list)
 
-    # def test_home_page_blog(self):
-    #     # Под шапкой раположен блог со статьями.
-    #     self.browser.get(self.live_server_url)
-    #     article_list = self.browser.find_element(By.CLASS_NAME, 'article-list')
-    #     self.assertTrue(article_list)
-
-    # def test_home_page_articles_look_correct(self):
-    #     # У каждой статьи есть заголовок и один абзац с текстом
-    #     self.browser.get(self.live_server_url)
-    #     article_title = self.browser.find_element(
-    #         By.CLASS_NAME,
-    #         'article-title')
-    #     article_text = self.browser.find_element(
-    #         By.CLASS_NAME,
-    #         'article-text')
-    #     self.assertTrue(article_title)
-    #     self.assertTrue(article_text)
+    def test_home_page_articles_look_correct(self):
+        # У каждой статьи есть заголовок и один абзац с текстом
+        self.browser.get(self.live_server_url)
+        article_title = self.browser.find_element(
+            By.CLASS_NAME,
+            'article-title')
+        article_text = self.browser.find_element(
+            By.CLASS_NAME,
+            'article-text')
+        self.assertTrue(article_title)
+        self.assertTrue(article_text)
 
 
     def test_home_page_article_title_link_leads_to_article_page(self):
@@ -155,16 +155,26 @@ class BlogTests(LiveServerTestCase):
         final_url = self.browser.current_url
         self.assertEqual(initial_url, final_url)
 
-    # def test_python_landing_redirect(self):
-    #     self.browser.get(self.live_server_url + '/python')
-    #     self.assertIn('Python для маркетологов и продактов',
-    #                   self.browser.title)
+    def test_python_landing_redirect(self):
+        self.browser.get(self.live_server_url + '/python')
+        self.assertIn('Python для маркетологов и продактов',
+                      self.browser.title)
 
-    # def test_setup_landing_redirect(self):
-    #     self.browser.get(self.live_server_url + '/setup')
-    #     self.assertIn('Настройка Python для работы с данными',
-    #                   self.browser.title)
+    def test_setup_landing_redirect(self):
+        self.browser.get(self.live_server_url + '/setup')
+        self.assertIn('Настройка Python для работы с данными',
+                      self.browser.title)
 
+    @override_settings(DEBUG=True)
+    def test_categoty_page_displays_correct_articles(self):
+        self.browser.get(self.live_server_url + '/blog/category-1')
+        page = self.browser.find_element(
+            By.TAG_NAME,
+            'body')
+        self.assertIn('category-1', self.browser.title)
+        self.assertIn('title 1', page.text)
+        self.assertIn('title 2', page.text)
+        self.assertNotIn('title 3', page.text)
 
 
 
