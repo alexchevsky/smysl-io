@@ -98,7 +98,7 @@ class ArticleModelTest(TestCase):
             title='article 1',
             full_text='full_text 1',
             summary='summary 1',
-            categery='category 1',
+            category='category 1',
             pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
             slug='slug-1',
             og_image=File(open('test_images/test_image_1.png', 'rb'))
@@ -111,7 +111,7 @@ class ArticleModelTest(TestCase):
             title='article 2',
             full_text='full_text 2',
             summary='summary 2',
-            categery='category 2',
+            category='category 2',
             pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
             slug='slug-2',
             og_image=File(open('test_images/test_image_2.png', 'rb'))

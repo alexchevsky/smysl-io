@@ -6,7 +6,7 @@ class Article(models.Model):
     title = models.CharField(max_length=255)
     summary = models.CharField(max_length=255)
     full_text = models.TextField()
-    categery = models.CharField(max_length=255)
+    category = models.CharField(max_length=255)
     pubdate = models.DateTimeField()
     slug = models.CharField(max_length=255, unique=True)
     og_image = models.ImageField(upload_to='images', null=True)
