@@ -59,7 +59,7 @@ class BlogTests(LiveServerTestCase):
         # В браузере Васи открылся сайт (по адресу http://127.0.0.1:8000)
         # В заголовке сайта Вася прочитал "Сайт Алексея Куличевского"
         self.browser.get(self.live_server_url)
-        self.assertIn('Сайт Алексея Куличевского', self.browser.title)
+        self.assertIn('Алексей Куличевский', self.browser.title)
 
     def test_home_page_header(self):
         # В шапке сайта написано "Алексей Куличевский"
@@ -167,7 +167,7 @@ class BlogTests(LiveServerTestCase):
 
     @override_settings(DEBUG=True)
     def test_categoty_page_displays_correct_articles(self):
-        self.browser.get(self.live_server_url + '/blog/category-1')
+        self.browser.get(self.live_server_url + '/blog/category/category-1')
         page = self.browser.find_element(
             By.TAG_NAME,
             'body')

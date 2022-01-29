@@ -8,6 +8,45 @@ from datetime import datetime
 import pytz
 
 
+class CategoriesPageTest(TestCase):
+    def test_categories_page_displays_correct_articles(self):
+        Article.objects.create(
+            title='title 1',
+            summary='summary 1',
+            full_text='full_text 1',
+            category='category-1',
+            pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
+            slug='slug-1',
+            og_image=File(open('test_images/test_image_1.png', 'rb'))
+        )
+        Article.objects.create(
+            title='title 2',
+            summary='summary 2',
+            full_text='full_text 2',
+            category='category-1',
+            pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
+            slug='slug-2',
+            og_image=File(open('test_images/test_image_1.png', 'rb'))
+        )
+        Article.objects.create(
+            title='title 3',
+            summary='summary 3',
+            full_text='full_text 3',
+            category='category-2',
+            pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
+            slug='slug-3',
+            og_image=File(open('test_images/test_image_1.png', 'rb'))
+        )
+
+        url = reverse('category_page', kwargs={'category': 'category-1'})
+        response = self.client.get(url)
+        html = response.content.decode('utf8')
+
+        self.assertIn('title 1', html)
+        # self.assertIn('title 2', html)
+        # self.assertNotIn('title 3', html)
+
+
 class ArticlePageTest(TestCase):
 
     def test_article_page_displays_correct_article(self):

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Сайт Алексея Куличевского{% endblock %}
+{% block title %}Алексей Куличевский: {{ article.title | safe }} {% endblock %}
 
 {% block opengraph %}
 <meta property="og:title" content="{{ article.title | safe }}" />
@@ -26,6 +26,9 @@
             <div class="article">
                 <h1 class="article-title">{{ article.title | safe }}</h1>
                 <div class="article-text">{{ article.full_text | safe }}</div>
+                <div class="article-footer">
+                    📁<a href="{{ article.get_category_url }}">{{ article.category }}</a>
+                </div>
             </div>
         </div>
     </div>

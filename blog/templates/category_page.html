@@ -1,16 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Алексей Куличевский: {{ category }}{% endblock %}
+
+{% block page_header %}
+<a href="{% url 'home_page' %}">
+    <img src="{% static 'img/avatar.jpeg' %}" />
+    <span class="author-name">Алексей Куличевский</span>
+</a>
+{% endblock %}
+
 {% block content %}    
     <div class="row">
         <div class="col-lg-8 col-md-12">
             <div class="article-list">
+                <h1>Категория: {{ category }}</h1>
                 {% for article in articles %}
                     <div class="article">
-                        <h1 class="article-title">
+                        <h2 class="article-title">
                             <a href="{{ article.get_absolute_url }}">{{ article.title | safe }}</a>
                         </h1>
-                        <div class="article-text">{{ article.full_text | safe }}</div>
+                        <div class="article-text">{{ article.summary | safe }}</div>
                         <div class="article-footer">
                             📁<a href="{{ article.get_category_url }}">{{ article.category }}</a>
                         </div>

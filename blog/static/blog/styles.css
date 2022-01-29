@@ -107,17 +107,33 @@ h4, h5, h6 {
   margin-bottom: 3em;
 }
 
-h1.article-title {
+.article-title {
   margin-bottom: 1em;
 }
 
-h1.article-title a {
+.article-title a {
   text-decoration: none;
   color: #333;
 }
 
-h1.article-title a:hover {
+.article-title a:hover {
   color: #555;
+}
+
+.article-footer {
+  margin-top: 2em;
+  font-size: .8em;
+}
+
+.article-footer a {
+  color: #333;
+  text-decoration: none;
+  text-decoration: underline;
+}
+
+.article-footer a:hover {
+  color: #777;
+  
 }
 
 .text-accent {
@@ -200,7 +216,7 @@ td, th {
   font-family: graphik-regular, Arial, Helvetica, sans-serif;
   font-size: .8em;
   font-weight: 600;
-  color: #ccc;
+  color: #aaa;
 }
 
 .dummy {
