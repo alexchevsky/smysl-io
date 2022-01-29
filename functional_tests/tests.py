@@ -166,15 +166,22 @@ class BlogTests(LiveServerTestCase):
                       self.browser.title)
 
     @override_settings(DEBUG=True)
-    def test_categoty_page_displays_correct_articles(self):
-        self.browser.get(self.live_server_url + '/blog/category/category-1')
+    def test_category_page_displays_correct_articles(self):
+        self.browser.get(self.live_server_url)
+        article = self.browser.find_element(
+            By.CLASS_NAME,
+            'article')
+        article_footer = article.find_element(
+            By.CLASS_NAME,
+            'article-footer') 
+        category_link = article_footer.find_element(By.TAG_NAME, 'a')
+        category = category_link.text
+        self.browser.get(category_link.get_attribute('href'))
         page = self.browser.find_element(
             By.TAG_NAME,
             'body')
-        self.assertIn('category-1', self.browser.title)
-        self.assertIn('title 1', page.text)
-        self.assertIn('title 2', page.text)
-        self.assertNotIn('title 3', page.text)
+        self.assertIn(category, self.browser.title)
+        self.assertIn(category, page.text)
 
 
 
