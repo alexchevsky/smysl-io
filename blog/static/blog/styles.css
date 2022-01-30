@@ -142,6 +142,11 @@ h4, h5, h6 {
   margin-bottom: 1rem;
 }
 
+.likely {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
 body .gist {
   margin-top: 1.5em;
   margin-bottom: 1.5em;
