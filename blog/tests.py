@@ -54,12 +54,13 @@ class ArticlePageTest(TestCase):
             title='title 1',
             summary='summary 1',
             full_text='full_text 1',
+            category='category-1',
             pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
-            slug='ooo-lya-lya',
+            slug='slug-1',
             og_image=File(open('test_images/test_image_1.png', 'rb'))
         )
 
-        url = reverse('article_page', kwargs={'slug': 'ooo-lya-lya'})
+        url = reverse('article_page', kwargs={'slug': 'slug-1'})
         response = self.client.get(url)
         html = response.content.decode('utf8')
 
@@ -75,15 +76,19 @@ class HomePageTest(TestCase):
             title='title 1',
             summary='summary 1',
             full_text='full_text 1',
+            category='category-1',
             pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
-            slug='slug-1'
+            slug='slug-1',
+            og_image=File(open('test_images/test_image_1.png', 'rb'))
         )
         Article.objects.create(
             title='title 2',
             summary='summary 2',
             full_text='full_text 2',
+            category='category-1',
             pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
-            slug='slug-2'
+            slug='slug-2',
+            og_image=File(open('test_images/test_image_1.png', 'rb'))
         )
 
         request = HttpRequest()
@@ -105,19 +110,23 @@ class HomePageTest(TestCase):
             title='title 1',
             summary='summary 1',
             full_text='full_text 1',
+            category='category-1',
             pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
-            slug='slug-1'
+            slug='slug-1',
+            og_image=File(open('test_images/test_image_1.png', 'rb'))
         )
         Article.objects.create(
             title='title 2',
             summary='summary 2',
             full_text='full_text 2',
+            category='category-1',
             pubdate=datetime.utcnow().replace(tzinfo=pytz.utc),
-            slug='slug-2'
+            slug='slug-2',
+            og_image=File(open('test_images/test_image_1.png', 'rb'))
         )
 
-        request = HttpRequest()
-        response = home_page(request)
+        url = reverse('home_page')
+        response = self.client.get(url)
         html = response.content.decode('utf8')
 
         self.assertTrue(html.find('title 1') > html.find('title 2'))
