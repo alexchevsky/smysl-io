@@ -26,14 +26,18 @@
             <div class="article">
                 <h1 class="article-title">{{ article.title | safe }}</h1>
                 <div class="article-text">{{ article.full_text | safe }}</div>
-                <div class="likely">
-                    <div class="twitter">Твитнуть</div>
-                    <div class="facebook">Поделиться</div>
-                    <div class="vkontakte">Поделиться</div>
-                    <div class="telegram">Отправить</div>
-                    <div class="whatsapp">Вотсапнуть</div>
-                </div>
+                
                 <div class="article-footer">
+                    
+                    <div class="likely-wrapper">
+                        <div class="likely">
+                            <div class="twitter">Твитнуть</div>
+                            <div class="facebook">Поделиться</div>
+                            <div class="vkontakte">Поделиться</div>
+                            <div class="telegram">Отправить</div>
+                            <div class="whatsapp">Вотсапнуть</div>
+                        </div>
+                    </div>
                     📁<a href="{{ article.get_category_url }}">{{ article.category }}</a>
                 </div>
             </div>
