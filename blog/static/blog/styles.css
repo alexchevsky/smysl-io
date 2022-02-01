@@ -24,6 +24,7 @@ body {
   font-size: 18px;
   font-family: graphik-regular, Arial, Helvetica, sans-serif;
   margin-bottom: 60px; /* Margin bottom by footer height */
+  line-height: 1.4em;
 }
 
 strong {
@@ -37,6 +38,7 @@ strong {
 
 h1, h2, h3 {
   font-family: graphik-black, Arial, Helvetica, sans-serif;
+  line-height: 1.4em;
 }
 
 
@@ -230,10 +232,19 @@ td, th {
 }
 
 /* @media only screen and (max-width: 960px){ */
+@media all and (min-device-width:569px) and (max-device-width: 960px) {
+  body {
+    font-size: 30px;
+  }
+}
 @media all and (min-device-width:0px) and (max-device-width: 568px) {
 
   body {
-    font-size: 30px;
+    font-size: 40px;
+  }
+
+  h1 {
+    font-size: 1.5em;
   }
 
   div.container-lg {
@@ -255,7 +266,7 @@ td, th {
 
 
   body .gist .blob-code-inner {
-    font-size: 1em;
+    font-size: 2em;
   }
 
   table {
@@ -263,10 +274,10 @@ td, th {
   }
 
   tr {
-    font-size: 1.2em;
+    font-size: 1.5em;
   }
   
   th {
-    font-size: 1.2em;
+    font-size: 1.5em;
   }
 }
