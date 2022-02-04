@@ -43,8 +43,8 @@ class CategoriesPageTest(TestCase):
         html = response.content.decode('utf8')
 
         self.assertIn('title 1', html)
-        # self.assertIn('title 2', html)
-        # self.assertNotIn('title 3', html)
+        self.assertIn('title 2', html)
+        self.assertNotIn('title 3', html)
 
 
 class ArticlePageTest(TestCase):
