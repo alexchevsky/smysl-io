@@ -173,7 +173,7 @@ class BlogTests(LiveServerTestCase):
             'article')
         article_footer = article.find_element(
             By.CLASS_NAME,
-            'article-footer') 
+            'article-footer')
         category_link = article_footer.find_element(By.TAG_NAME, 'a')
         category = category_link.text
         self.browser.get(category_link.get_attribute('href'))
