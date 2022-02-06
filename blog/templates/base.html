@@ -34,12 +34,8 @@
                     </div>
                 </div>
             </div>
-            {% get_current_language as LANGUAGE_CODE %}
-            <p>Язык: {{ LANGUAGE_CODE }}</p>
-            <p>Имя: {{ author_name }}</p>
             {% block content %}
             {% endblock %}
-
         </div>
         <footer class="footer">
             <div class="container-lg">

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}{{ author_name }}: {{ article.title | safe }} {% endblock %}
 
@@ -31,11 +32,11 @@
                     
                     <div class="likely-wrapper">
                         <div class="likely">
-                            <div class="twitter">Твитнуть</div>
-                            <div class="facebook">Поделиться</div>
-                            <div class="vkontakte">Поделиться</div>
-                            <div class="telegram">Отправить</div>
-                            <div class="whatsapp">Вотсапнуть</div>
+                            <div class="twitter">{% translate "Твитнуть" %}</div>
+                            <div class="facebook">{% translate "Поделиться" %}</div>
+                            <div class="vkontakte">{% translate "Поделиться" %}</div>
+                            <div class="telegram">{% translate "Отправить" %}</div>
+                            <div class="whatsapp">{% translate "Вотсапнуть" %}</div>
                         </div>
                     </div>
                     📁<a href="{{ article.get_category_url }}">{{ article.category }}</a>
