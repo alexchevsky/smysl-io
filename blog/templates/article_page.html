@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Алексей Куличевский: {{ article.title | safe }} {% endblock %}
+{% block title %}{{ author_name }}: {{ article.title | safe }} {% endblock %}
 
 {% block opengraph %}
 <meta property="og:title" content="{{ article.title | safe }}" />
@@ -10,13 +10,13 @@
 <meta property="og:image:height" content="{{ article.og_image.height}}" />
 <meta property="og:type" content="blog" />
 <meta property="og:url" content="{{ request.build_absolute_uri }}" />
-<meta property="og:author" content="Алексей Куличевский" />
+<meta property="og:author" content="{{ author_name }}" />
 {% endblock %}
 
 {% block page_header %}
 <a href="{% url 'home_page' %}">
     <img src="{% static 'img/avatar.jpeg' %}" />
-    <span class="author-name">Алексей Куличевский</span>
+    <span class="author-name">{{ author_name }}</span>
 </a>
 {% endblock %}
 

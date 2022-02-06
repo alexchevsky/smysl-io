@@ -55,18 +55,6 @@ class BlogTests(LiveServerTestCase):
     def tearDown(self):
         self.browser.quit()
 
-    def test_home_page_title(self):
-        # В браузере Васи открылся сайт (по адресу http://127.0.0.1:8000)
-        # В заголовке сайта Вася прочитал "Сайт Алексея Куличевского"
-        self.browser.get(self.live_server_url)
-        self.assertIn('Алексей Куличевский', self.browser.title)
-
-    def test_home_page_header(self):
-        # В шапке сайта написано "Алексей Куличевский"
-        self.browser.get(self.live_server_url)
-        header = self.browser.find_element(By.CLASS_NAME, 'avatar-top')
-        self.assertIn('Алексей Куличевский', header.text)
-
     #  TODO this test is incorrect
     def test_layout_and_styling(self):
         self.browser.get(self.live_server_url)
@@ -194,7 +182,5 @@ class BlogTests(LiveServerTestCase):
 # Вася попытался открыть несуществующую статью и ему открылась
 # Красивая страничка "Страница не найдена"
 
-# Прочитал статью Вася кликнул по тексту "Алексей Куличевский" в шапке сайта и 
-# попал обратно на главную страницу.
 
 # Некоторые статьи есть в админке, но они не опубликованы

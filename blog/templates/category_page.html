@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Алексей Куличевский: {{ category }}{% endblock %}
+{% block title %}{{ author_name }}: {{ category }}{% endblock %}
 
 {% block page_header %}
 <a href="{% url 'home_page' %}">
     <img src="{% static 'img/avatar.jpeg' %}" />
-    <span class="author-name">Алексей Куличевский</span>
+    <span class="author-name">{{ author_name }}</span>
 </a>
 {% endblock %}
 
