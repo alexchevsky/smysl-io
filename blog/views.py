@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from .models import Article
+from django.utils.translation import gettext as _
+
 
 global_context = {
-    'author_name': 'Александр Сергеевич Пушкин',
+    'author_name': _('Алексей Куличевский'),
 }
 
 

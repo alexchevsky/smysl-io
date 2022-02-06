@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 
 <html>
     <head>
@@ -23,6 +24,7 @@
     <!-- End Google Tag Manager (noscript) -->
         <div class="container-lg">
             <div class="row page-header">
+                
                 <div class="col">
                     <div class="avatar-top">
                         {% block page_header %}
@@ -32,6 +34,9 @@
                     </div>
                 </div>
             </div>
+            {% get_current_language as LANGUAGE_CODE %}
+            <p>Язык: {{ LANGUAGE_CODE }}</p>
+            <p>Имя: {{ author_name }}</p>
             {% block content %}
             {% endblock %}
 
