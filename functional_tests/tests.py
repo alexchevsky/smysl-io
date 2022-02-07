@@ -153,6 +153,16 @@ class BlogTests(LiveServerTestCase):
         self.assertIn('Настройка Python для работы с данными',
                       self.browser.title)
 
+    def test_dev_landing_redirect(self):
+        self.browser.get(self.live_server_url + '/dev')
+        self.assertIn('Рассылка о создании цифровых продуктов',
+                      self.browser.title)
+
+    def test_dev_landing_redirect(self):
+        self.browser.get(self.live_server_url + '/trello')
+        self.assertIn('Trello',
+                      self.browser.title)
+
     @override_settings(DEBUG=True)
     def test_category_page_displays_correct_articles(self):
         self.browser.get(self.live_server_url)

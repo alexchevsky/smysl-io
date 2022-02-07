@@ -19,7 +19,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from blog.views import home_page, article_page, category_page
-from courses.views import python_redirect, setup_redirect
+from courses.views import python_redirect, setup_redirect, dev_redirect, \
+                          trello_redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +30,8 @@ urlpatterns = [
          name='category_page'),
     path('python/', python_redirect, name='python_redirect'),
     path('setup/', setup_redirect, name='setup_redirect'),
+    path('dev/', dev_redirect, name='dev_redirect'),
+    path('trello/', trello_redirect, name='trello_redirect'),
 ]
 
 if settings.DEBUG:
