@@ -85,6 +85,10 @@ h4, h5, h6 {
 
 }
 
+.bg-light-yellow {
+  background-color: #fdf6e3;
+}
+
 .image-caption {
   font-size: .7em;
   /* font-style: italic; */
@@ -98,6 +102,10 @@ h4, h5, h6 {
   font-size: 1em;
   line-height: 1.8em;
   border-left: .5em solid #fdf6e3;
+}
+
+.blog-splash {
+  width: 100%;
 }
 
 .vertical-space {
