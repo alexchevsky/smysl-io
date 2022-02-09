@@ -7,8 +7,10 @@
 {% block opengraph %}
 <meta property="og:title" content="{{ article.title | safe }}" />
 <meta property="og:image" content="https://{{ request.get_host }}{{ article.og_image.url}}" />
-<!-- <meta property="og:image:width" content="{{ article.og_image.width}}" />
-<meta property="og:image:height" content="{{ article.og_image.height}}" /> -->
+<meta property="twitter:image" content="https://{{ request.get_host }}{{ article.og_image.url}}" />
+<link rel="image_src" href="https://{{ request.get_host }}{{ article.og_image.url}}">
+<meta property="og:image:width" content="600" />
+<meta property="og:image:height" content="315" />
 <meta property="og:type" content="blog" />
 <meta property="og:url" content="{{ request.build_absolute_uri }}" />
 <meta property="og:author" content="{{ author_name }}" />
