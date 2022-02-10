@@ -85,6 +85,12 @@ h4, h5, h6 {
 
 }
 
+.inline-icon {
+  display: inline;
+  width: .7em;
+  padding-right: .1em;
+}
+
 .bg-light-yellow {
   background-color: #fdf6e3;
 }
