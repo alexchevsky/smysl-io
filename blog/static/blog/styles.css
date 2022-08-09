@@ -32,7 +32,7 @@ body {
   font-size: 18px;
   font-family: graphik-regular, Arial, Helvetica, sans-serif;
   margin-bottom: 60px; /* Margin bottom by footer height */
-  line-height: 1.4rem;
+  line-height: 1.4em;
 }
 
 strong {
@@ -40,7 +40,7 @@ strong {
 }
 
 .page-header {
-  height: 9rem;
+  height: 9em;
   margin-left: -20px;
 }
 
@@ -55,28 +55,28 @@ h4 {
 
 
 h1 {
-  font-size: 2rem;
+  font-size: 2em;
 }
 
 h2 {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  font-size: 1.3em;
 }
 
 h3 {
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
-  font-size: 1.05rem;
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+  font-size: 1.05em;
 }
 
 h4, h5, h6 {
-  font-size: 1rem;
+  font-size: 1em;
 }
 
 .avatar-top {
-  margin-top: 2rem;
-  font-size: 0.8rem;
+  margin-top: 2em;
+  font-size: 0.8em;
   font-family: graphik-black, Arial, Helvetica, sans-serif;
 }
 
@@ -87,7 +87,7 @@ h4, h5, h6 {
 
 .avatar-top img {
   width: 32px;
-  margin-right: .2rem;
+  margin-right: .2em;
   clip-path: circle(15px at center);
   margin-top: -3px;
 }
@@ -99,9 +99,9 @@ h4, h5, h6 {
 
 .inline-icon {
   display: inline;
-  width: 1rem;
-  padding-right: .1rem;
-  padding-bottom: .1rem;
+  width: 1em;
+  padding-right: .1em;
+  padding-bottom: .1em;
 }
 
 .bg-light-yellow {
@@ -109,17 +109,17 @@ h4, h5, h6 {
 }
 
 .image-caption {
-  font-size: .7rem;
+  font-size: .7em;
   /* font-style: italic; */
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 1em;
 }
 
 .quote {
-  padding-left: 1rem;
+  padding-left: 1em;
   font-style: italic;
-  font-size: 1rem;
-  line-height: 1.8rem;
+  font-size: 1em;
+  line-height: 1.8em;
   border-left: .5em solid #fdf6e3;
 }
 
@@ -128,16 +128,16 @@ h4, h5, h6 {
 }
 
 .vertical-space {
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
 }
 
 .article {
-  margin-bottom: 3rem;
+  margin-bottom: 3em;
 }
 
 .article-title {
-  margin-bottom: 1rem;
+  margin-bottom: 1em;
 }
 
 .article-title a {
@@ -150,8 +150,8 @@ h4, h5, h6 {
 }
 
 .article-footer {
-  margin-top: 2rem;
-  font-size: .8rem;
+  margin-top: 2em;
+  font-size: .8em;
 }
 
 .article-footer a {
@@ -177,8 +177,8 @@ h4, h5, h6 {
 }
 
 body .gist {
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
 }
 
 body .gist .gist-file, body .gist .gist-file .gist-data {
@@ -215,6 +215,8 @@ table {
   border-spacing: 0;
   border-collapse: collapse;
   width: 80%;
+  /* margin-top: 3rem;
+  margin-bottom: 4rem; */
 }
 
 figure table {
@@ -224,7 +226,7 @@ figure table {
 
 tr {
   font-family: graphik-regular;
-  /* font-size: .9em; */
+  font-size: 1rem;
   line-height: inherit;
 }
 
@@ -246,13 +248,13 @@ td, th {
   line-height: 60px; /* Vertically center the text there */
   background-color: #fff;
   font-family: graphik-regular, Arial, Helvetica, sans-serif;
-  font-size: .8rem;
+  font-size: .8em;
   font-weight: 600;
   color: #aaa;
 }
 
 .dummy {
-  height: 5rem;
+  height: 5em;
   /* border: 1px solid red; */
 }
 
@@ -269,29 +271,27 @@ td, th {
   }
 
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.5em;
   }
 
   div.container-lg {
-    padding-left: 1rem;
-    padding-right: 2rem;
+    padding-left: 1em;
+    padding-right: 2em;
   }
 
   .page-header {
-    height: 5rem;
+    height: 5em;
   }
 
   .avatar-top img {
     width: 40px;
-    margin-right: .2rem;
+    margin-right: .2em;
     clip-path: circle(19px at center);
     margin-top: -3px;
   }
 
-
-
   body .gist .blob-code-inner {
-    font-size: 2rem;
+    font-size: 2em;
   }
 
   table {
@@ -299,10 +299,10 @@ td, th {
   }
 
   tr {
-    font-size: 1.5rem;
+    font-size: 1.5em;
   }
   
   th {
-    font-size: 1.5rem;
+    font-size: 1.5em;
   }
 }
