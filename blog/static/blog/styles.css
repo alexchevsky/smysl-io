@@ -233,15 +233,11 @@ figure table {
 
 tr {
   font-family: graphik-regular;
-  font-size: 1rem;
+  font-size: .875rem;
   line-height: inherit;
 }
 
-th {
-  font-family: graphik-black;
-  /* font-size: 1rem; */
-  padding: .5rem 1.5rem .5rem 0;
-}
+
 
 td, th {
   padding: .5rem 1.5rem .5rem 0;
