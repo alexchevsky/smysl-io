@@ -215,8 +215,8 @@ table {
   border-spacing: 0;
   border-collapse: collapse;
   width: 80%;
-  margin-top: 3rem;
-  margin-bottom: 4rem;
+  /* margin-top: 3rem;
+  margin-bottom: 4rem; */
 }
 
 figure table {
@@ -289,8 +289,6 @@ td, th {
     clip-path: circle(19px at center);
     margin-top: -3px;
   }
-
-
 
   body .gist .blob-code-inner {
     font-size: 2em;
