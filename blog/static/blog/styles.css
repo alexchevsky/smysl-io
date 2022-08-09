@@ -24,15 +24,22 @@
 html {
   position: relative;
   min-height: 100%;
+  font-size: 18px;
 }
 
 
 body {
   color: #333;
-  font-size: 18px;
   font-family: graphik-regular, Arial, Helvetica, sans-serif;
   margin-bottom: 60px; /* Margin bottom by footer height */
-  line-height: 1.4em;
+  line-height: 1.4rem;
+}
+
+ol li {
+  padding-bottom: .5rem; 
+}
+ul li {
+  padding-bottom: .5rem; 
 }
 
 strong {
@@ -40,13 +47,13 @@ strong {
 }
 
 .page-header {
-  height: 9em;
+  height: 9rem;
   margin-left: -20px;
 }
 
 h1, h2, h3 {
   font-family: graphik-black, Arial, Helvetica, sans-serif;
-  line-height: 1.4em;
+  line-height: 1.7rem;
 }
 
 h4 {
@@ -232,7 +239,7 @@ tr {
 
 th {
   font-family: graphik-black;
-  font-size: 1rem;
+  /* font-size: 1rem; */
   padding: .5rem 1.5rem .5rem 0;
 }
 
@@ -258,20 +265,32 @@ td, th {
   /* border: 1px solid red; */
 }
 
+.callout {
+  background-color: #fdf6e3; 
+  padding: 2em; 
+  margin-bottom: 1em;
+  font-size: .9em;
+}
+
+code {
+  color: #333;
+  word-wrap: break-word;
+}
+
 /* @media only screen and (max-width: 960px){ */
 @media all and (min-device-width:569px) and (max-device-width: 960px) {
-  body {
+  html {
     font-size: 30px;
   }
 }
 @media all and (min-device-width:0px) and (max-device-width: 568px) {
 
-  body {
+  html {
     font-size: 40px;
   }
 
   h1 {
-    font-size: 1.5em;
+    font-size: 1.5rem;
   }
 
   div.container-lg {
@@ -291,18 +310,19 @@ td, th {
   }
 
   body .gist .blob-code-inner {
-    font-size: 2em;
+    font-size: .9rem;
   }
 
   table {
     width: 100%;
   }
 
+  ol, ul {
+    padding-left: 1rem;
+  }
+
   tr {
-    font-size: 1.5em;
+    font-size: 0.875rem;
   }
   
-  th {
-    font-size: 1.5em;
-  }
 }
