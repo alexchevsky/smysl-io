@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from blog.views import home_page, article_page, category_page
-from api.views import health
+from api.views import health, tasks, task_detail, get_token
 from courses.views import python_redirect, setup_redirect, dev_redirect, \
                           trello_redirect
 
@@ -34,6 +34,9 @@ urlpatterns = [
     path('dev/', dev_redirect, name='dev_redirect'),
     path('trello/', trello_redirect, name='trello_redirect'),
     path('health', health, name='health'),
+    path('tasks', tasks, name='tasks'),
+    path('tasks/<int:task_id>', task_detail, name='task_detail'),
+    path('get_token', get_token, name='get_token'),
 ]
 
 if settings.DEBUG:
