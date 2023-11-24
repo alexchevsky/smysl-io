@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from blog.views import home_page, article_page, category_page
+from api.views import health
 from courses.views import python_redirect, setup_redirect, dev_redirect, \
                           trello_redirect
 
@@ -32,6 +33,7 @@ urlpatterns = [
     path('setup/', setup_redirect, name='setup_redirect'),
     path('dev/', dev_redirect, name='dev_redirect'),
     path('trello/', trello_redirect, name='trello_redirect'),
+    path('health', health, name='health'),
 ]
 
 if settings.DEBUG:

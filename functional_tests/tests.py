@@ -180,7 +180,22 @@ class BlogTests(LiveServerTestCase):
         self.assertIn(category, self.browser.title)
         self.assertIn(category, page.text)
 
+class HealthEndpointFunctionalTest(LiveServerTestCase):
+    def setUp(self):
+        self.browser = webdriver.Chrome()
+        staging_server = os.environ.get('STAGING_SERVER')
+        if staging_server:
+            self.live_server_url = 'http://' + staging_server
 
+    def tearDown(self):
+        self.browser.quit()
+
+    def test_health_endpoint(self):
+        client = Client()
+        response = client.get('/health')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), {"status_code": 200, "message": "API is online"})
+        self.assertEqual(response['Content-Type'], 'application/json')
 
 # self.fail('Finish the test!')
 

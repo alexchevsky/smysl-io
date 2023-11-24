@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'gallery',
+    'api',
 ]
 
 APPEND_SLASH = True
