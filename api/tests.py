@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from .models import Task, Token
 from django.utils import timezone
 from datetime import timedelta
+import json
 
 class HealthEndpointUnitTest(TestCase):
     def test_health_view_status_code(self):
@@ -116,7 +117,8 @@ class TaskModelUnitTest(TestCase):
 
 class GetTokenTests(TestCase):
     def test_get_token_success(self):
-        response = self.client.post(reverse('get_token'), {'email': 'test@example.com'})
+        data = {'email': 'test@example.com'}
+        response = self.client.post(reverse('get_token'), json.dumps(data), content_type='application/json')
         self.assertEqual(response.status_code, 200)
         self.assertIn('api_token', response.json())
         self.assertIn('expires_at', response.json())
@@ -125,7 +127,8 @@ class GetTokenTests(TestCase):
         self.assertTrue(Token.objects.filter(token=token).exists())
 
     def test_get_token_no_email(self):
-        response = self.client.post(reverse('get_token'))
+        data = {}
+        response = self.client.post(reverse('get_token'), json.dumps(data), content_type='application/json')
         self.assertEqual(response.status_code, 400)
 
 

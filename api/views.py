@@ -3,6 +3,7 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from .models import Task, Token
 from django.utils import timezone
+import json
 
 def health(request):
     data = {
@@ -41,7 +42,12 @@ def task_detail(request, task_id):
 @require_POST
 @csrf_exempt
 def get_token(request):
-    email = request.POST.get('email')
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    email = data.get('email')
     if not email:
         return JsonResponse({'error': 'Email is required'}, status=400)
 
