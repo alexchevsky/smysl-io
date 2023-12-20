@@ -28,20 +28,22 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MS47VNR" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <div class="container-lg">
-        <div class="row page-header">
+    <div class="content">
+        <div class="container-lg">
+            <div class="row page-header">
 
-            <div class="col">
-                <div class="avatar-top">
-                    {% block page_header %}
-                    <img src="{% static 'img/avatar.jpeg' %}" />
-                    <span class="author-name">{{ author_name }}</span>
-                    {% endblock %}
+                <div class="col">
+                    <div class="avatar-top">
+                        {% block page_header %}
+                        <img src="{% static 'img/avatar.jpeg' %}" />
+                        <span class="author-name">{{ author_name }}</span>
+                        {% endblock %}
+                    </div>
                 </div>
             </div>
+            {% block content %}
+            {% endblock %}
         </div>
-        {% block content %}
-        {% endblock %}
     </div>
     <footer class="footer">
         <div class="container-lg">
@@ -53,6 +55,9 @@
                 <br />115 409, Россия, Москва
                 <br />Каширское шоссе,
                 <br />д. 78, к. 4, кв. 345
+                <br /><a
+                    href="https://docs.google.com/document/d/1y3wF7ydZFDjxcH0GukILGsmEVkmyakZQz6rOQIveEnQ/edit?usp=sharing"
+                    target="_blank">Оферта</a>
             </div>
         </div>
     </footer>

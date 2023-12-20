@@ -81,6 +81,11 @@ h4, h5, h6 {
   font-size: 1em;
 }
 
+.content {
+  min-height: 100vh; 
+  padding-bottom: 50px; 
+}
+
 .avatar-top {
   margin-top: 2em;
   font-size: 0.8em;
@@ -244,8 +249,7 @@ td, th {
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
+  position: relative; /* Changed from absolute to relative */
   width: 100%;
   background-color: #fff;
   font-family: graphik-regular, Arial, Helvetica, sans-serif;
@@ -253,6 +257,10 @@ td, th {
   font-weight: 600;
   color: #aaa;
   padding-bottom: 2em;
+}
+
+.footer a {
+  color: #aaa;
 }
 
 .dummy {
