@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Registration Successful!{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mt-5">Registration Successful!</h1>
+        <p class="lead mt-3">Your account has been created. You can now <a href="{% url 'login' %}">Log in</a>.</p>
+    </div>
+</div>
+{% endblock %}

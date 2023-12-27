@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'blog',
     'gallery',
     'api',
+    'users',
+    'widget_tweaks'
 ]
 
 APPEND_SLASH = True
@@ -61,7 +63,7 @@ ROOT_URLCONF = 'smysl3.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -106,6 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'users.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

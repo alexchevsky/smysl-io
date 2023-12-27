@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -24,6 +24,7 @@ from courses.views import python_redirect, setup_redirect, dev_redirect, \
                           trello_redirect
 
 urlpatterns = [
+    path('', include('users.urls')),
     path('admin/', admin.site.urls),
     path('', home_page, name='home_page'),
     path('blog/<slug:slug>/', article_page, name='article_page'),
