@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.test.client import RequestFactory
+from django.contrib.auth.models import AnonymousUser
 
 User = get_user_model()
 
@@ -77,3 +78,21 @@ class RestrictedPageTests(TestCase):
         self.client.login(email='user@example.com', password='password123')
         response = self.client.get(reverse('profile'))
         self.assertEqual(response.status_code, 200)
+
+class LogoutTests(TestCase):
+
+    def setUp(self):
+        # Create a test user
+        self.user = User.objects.create_user(email='test@example.com', password='password123')
+        self.client.login(email='test@example.com', password='password123')
+
+    def test_logout(self):
+        # Perform logout
+        response = self.client.get(reverse('logout'))
+
+        # Check if the user is redirected to the appropriate page after logout
+        self.assertRedirects(response, reverse('home_page'))  # Adjust as per your redirection URL
+
+        # Check if the user is now anonymous (not logged in)
+        user = self.client.get(reverse('home_page')).context['user']  # Assuming 'home' is a view accessible to logged-out users
+        self.assertTrue(isinstance(user, AnonymousUser))

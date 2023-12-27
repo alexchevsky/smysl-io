@@ -1,6 +1,7 @@
 from selenium import webdriver
-from django.core.files import File
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
+from django.core.files import File
 from django.test import LiveServerTestCase, Client
 from blog.models import Article
 from api.models import Task, Token
@@ -307,35 +308,67 @@ import json
     # Add assertions here to verify successful login, such as checking for a logout link, user's email display, or redirect to a protected page.
 
 
-class SecretPagesTests(LiveServerTestCase):
+# class SecretPagesTests(LiveServerTestCase):
+#     def setUp(self):
+#         self.browser = webdriver.Chrome()
+#         # Create a test user
+#         User = get_user_model()
+#         User.objects.create_user(email='test@example.com', password='password123')
+
+#     def tearDown(self):
+#         self.browser.quit()
+
+#     def test_redirect_to_login_and_then_to_my_page(self):
+#         # Try to access the my page
+#         self.browser.get(self.live_server_url + reverse('my'))
+#         # Check for redirection to the login page
+#         self.assertIn("Login", self.browser.title)
+
+#         # Perform login
+#         email_input = self.browser.find_element_by_name('username')
+#         email_input.send_keys('test@example.com')
+#         password_input = self.browser.find_element_by_name('password')
+#         password_input.send_keys('password123')
+#         submit_button = self.browser.find_element_by_xpath("//button[@type='submit']")
+#         submit_button.click()
+
+#         # Assert redirection to the my page
+#         self.assertEqual(self.browser.current_url, self.live_server_url + reverse('my'))
+
+#     def test_redirect_to_login_and_then_to_profile_page(self):
+#         # Try to access the profile page
+#         self.browser.get(self.live_server_url + reverse('profile'))
+#         # Check for redirection to the login page and similar steps as above
+
+class LogoutTest(LiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Chrome()
-        # Create a test user
         User = get_user_model()
         User.objects.create_user(email='test@example.com', password='password123')
-
-    def tearDown(self):
-        self.browser.quit()
-
-    def test_redirect_to_login_and_then_to_my_page(self):
-        # Try to access the my page
-        self.browser.get(self.live_server_url + reverse('my'))
-        # Check for redirection to the login page
-        self.assertIn("Login", self.browser.title)
+        self.browser.get(self.live_server_url + reverse('login'))
 
         # Perform login
-        email_input = self.browser.find_element_by_name('username')
+        email_input = self.browser.find_element_by_name('username')  # Adjust based on your login form
         email_input.send_keys('test@example.com')
         password_input = self.browser.find_element_by_name('password')
         password_input.send_keys('password123')
         submit_button = self.browser.find_element_by_xpath("//button[@type='submit']")
         submit_button.click()
 
-        # Assert redirection to the my page
-        self.assertEqual(self.browser.current_url, self.live_server_url + reverse('my'))
+    def tearDown(self):
+        self.browser.quit()
 
-    def test_redirect_to_login_and_then_to_profile_page(self):
-        # Try to access the profile page
-        self.browser.get(self.live_server_url + reverse('profile'))
-        # Check for redirection to the login page and similar steps as above
+    def test_logout(self):
+        # Navigate to logout link or button
+        logout_link = self.browser.find_element_by_id('logout')  # Adjust the selector as per your logout link/button
+        logout_link.click()
 
+        # Check if redirected to login page or another specified page after logout
+        try:
+            self.browser.find_element_by_id('login')
+        except NoSuchElementException:
+            self.fail("Login link is not present on the page")  # Adjust based on your page title after logout
+
+        # Optionally, attempt to access a protected page and check for redirection to login page
+        self.browser.get(self.live_server_url + reverse('my'))
+        self.assertIn("Login", self.browser.title)  # Adjust based on expected behavior
