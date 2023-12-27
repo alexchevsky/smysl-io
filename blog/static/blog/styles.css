@@ -87,8 +87,6 @@ h4, h5, h6 {
 }
 
 .avatar-top {
-  margin-top: 2em;
-  font-size: 0.8em;
   font-family: graphik-black, Arial, Helvetica, sans-serif;
 }
 
@@ -101,12 +99,37 @@ h4, h5, h6 {
   width: 32px;
   margin-right: .2em;
   clip-path: circle(15px at center);
-  margin-top: -3px;
+  /* margin-top: -3px;   */
+}
+
+.avatar-top .author-name {
+  font-family: graphik-black, Arial, Helvetica, sans-serif;
+  /* margin-top: 2em; */
 }
 
 .article-image {
   width: 100%;
+}
 
+.font-size-small {
+  font-size: .8em;
+}
+
+.margin-top-2em {
+  margin-top: 2em;
+}
+
+.vertical-center {
+  display: flex;
+  align-items: center; /* Vertically centers the content */
+}
+
+.height-30px {
+  height: 30px; /* Or any desired height */
+}
+
+.align-right {
+  text-align: right; /* Aligns text to the right */
 }
 
 .inline-icon {

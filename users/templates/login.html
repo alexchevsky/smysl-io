@@ -3,6 +3,12 @@
 
 {% block title %}Login{% endblock %}
 
+{% block page_header %}
+<a href="{% url 'home_page' %}">
+    <span class="author-name">{{ author_name }}</span>
+</a>
+{% endblock %}
+
 
 {% block content %}
 <div class="row">
