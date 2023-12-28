@@ -15,6 +15,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+IN_PRODUCTION = os.environ.get('DJANGO_PRODUCTION') == 'true'
 
 
 # Quick-start development settings - unsuitable for production
@@ -82,12 +83,26 @@ WSGI_APPLICATION = 'smysl3.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if IN_PRODUCTION:
+    # PostgreSQL configuration for production
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'smysl',
+            'USER': 'admin',
+            'PASSWORD': os.environ.get('DJANGO_DATABASE_PASSWORD', ''),
+            'HOST': 'localhost',  # Or your PostgreSQL server address
+            'PORT': '5432',       # Default PostgreSQL port
+        }
     }
-}
+else:
+    # SQLite configuration for local development
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation

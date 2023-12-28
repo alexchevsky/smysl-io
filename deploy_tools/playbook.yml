@@ -2,71 +2,87 @@
 
 - hosts: all
   gather_facts: no
+  vars_files:
+    - db_credentials.yml
   vars:
       host: "{{ inventory_hostname }}"
       ansible_user: "ak"
   tasks:
-  # Устанавливаем python3.9 + python3.9-venv, git, nginx, gunicorn
     - name: Deadsnakes PPA to get Python 3.9
       become: yes
       apt_repository:
-        repo='ppa:deadsnakes/ppa'
+        repo: 'ppa:deadsnakes/ppa'
 
     - name: Make sure required packages are installed
+      become: yes
       apt: 
-        pkg=nginx,git,python3.9,python3.9-venv,gettext
-        state=present
+        pkg: ['nginx', 'git', 'python3.9', 'python3.9-venv', 'gettext', 'postgresql', 'postgresql-contrib']
+        state: present
+        update_cache: yes
 
-    # Скачиваем код из гитхаба
-    - name: Download code from Github
+    - name: Download code from GitHub
       ansible.builtin.git:
         repo: https://github.com/alexchevsky/smysl-io.git
         dest: /home/{{ ansible_user }}/sites/{{ host }}
 
-
-    # Создаем виртуальное окружение и устанавливаем зависимости
     - name: Install dependencies
       pip:
         requirements: /home/{{ ansible_user }}/sites/{{ host }}/requirements.txt
         virtualenv: /home/{{ ansible_user }}/sites/{{ host }}/venv/
         virtualenv_command: /usr/bin/python3.9 -m venv
 
-    # Прогоняем миграции
+    - name: Ensure PostgreSQL is running
+      become: yes
+      service:
+        name: postgresql
+        state: started
+        enabled: yes
+
+    - name: Create a database
+      become: yes
+      become_user: postgres
+      postgresql_db:
+        name: "{{ django_db_name }}"
+
+    - name: Create a database user
+      become: yes
+      become_user: postgres
+      postgresql_user:
+        db: "{{ django_db_name }}"
+        name: "{{ django_db_user }}"
+        password: "{{ django_db_password }}"
+        priv: ALL
+
     - name: Run migrations
       community.general.django_manage:
         command: migrate
         project_path: "/home/{{ ansible_user }}/sites/{{ host }}"
         virtualenv: "/home/{{ ansible_user }}/sites/{{ host }}/venv"
 
-    # Создаем файл конфигурации в sites-available
     - name: Add nginx config to sites-available
       template: 
-        src=./sites-available.j2
-        dest=/etc/nginx/sites-available/{{ host }}
+        src: ./sites-available.j2
+        dest: /etc/nginx/sites-available/{{ host }}
       notify:
         - Restart nginx
 
-    # Подключить конфигурацию в sites-enabled --> [Перезапустить Nginx]
     - name: Add symlink in nginx sites-enabled
       file:
-          src=/etc/nginx/sites-available/{{ host }}
-          dest=/etc/nginx/sites-enabled/{{ host }}
-          state=link
+        src: /etc/nginx/sites-available/{{ host }}
+        dest: /etc/nginx/sites-enabled/{{ host }}
+        state: link
       notify:
-          - Restart nginx
-
-    # Настраиваем gunicorn --> [Перезапустить gunicorn]
+        - Restart nginx
 
     - name: Write gunicorn service script
       template: 
-        src=./gunicorn.j2
-        dest=/etc/systemd/system/gunicorn-{{ host }}.service
+        src: ./gunicorn.j2
+        dest: /etc/systemd/system/gunicorn-{{ host }}.service
       notify:
         - Restart gunicorn
       tags:
         - gunicorn
 
-    # Собираем статические файлы
     - name: Collect Static Files
       community.general.django_manage:
         command: collectstatic --noinput
@@ -75,42 +91,45 @@
       tags:
         - static
 
-    # Компилируем перевод
     - name: Compile translation files
-      django_manage: 
+      community.general.django_manage: 
         command: compilemessages --ignore="venv/*"
         project_path: "/home/{{ ansible_user }}/sites/{{ host }}"
         virtualenv: "/home/{{ ansible_user }}/sites/{{ host }}/venv"
 
-    # Создаем файл .env с переменными
     - name: Create .env file
       template: 
-        src=./dotenv.j2
-        dest=/home/{{ ansible_user }}/sites/{{ host }}/.env
+        src: ./dotenv.j2
+        dest: /home/{{ ansible_user }}/sites/{{ host }}/.env
       tags:
         - dotenv
 
-    - name: Write DJANGO_SECRET_KEY to .env
-      ansible.builtin.lineinfile:
+    - name: Add environment variables to .env
+      blockinfile:
         path: /home/{{ ansible_user }}/sites/{{ host }}/.env
-        line: DJANGO_SECRET_KEY="{{ lookup('password', '/dev/null') }}"
+        block: |
+          DJANGO_SECRET_KEY="{{ lookup('password', '/dev/null') }}"
+          DJANGO_DATABASE_PASSWORD="{{ django_db_password }}"
+          DJANGO_PRODUCTION=true
       tags:
         - dotenv
 
     - name: Restart gunicorn
       systemd:
-        name=gunicorn-{{ host }}
-        daemon_reload=yes
-        enabled=yes
-        state=restarted
+        name: gunicorn-{{ host }}
+        daemon_reload: yes
+        enabled: yes
+        state: restarted
 
   handlers:   
     - name: Restart nginx
-      service:  name=nginx state=restarted
+      service: 
+        name: nginx 
+        state: restarted
 
     - name: Restart gunicorn
       systemd:
-        name=gunicorn-{{ host }}
-        daemon_reload=yes
-        enabled=yes
-        state=restarted
+        name: gunicorn-{{ host }}
+        daemon_reload: yes
+        enabled: yes
+        state: restarted
