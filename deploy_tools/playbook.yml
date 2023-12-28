@@ -6,9 +6,18 @@
     - db_credentials.yml
   vars:
       host: "{{ inventory_hostname }}"
-      ansible_user: "ak"
+      ansible_user: ubuntu
+      django_db_name: smysl
+      
   tasks:
-    - name: Deadsnakes PPA to get Python 3.9
+    - name: Ensure user exists
+      become: yes
+      user:
+        name: ak
+        state: present
+        create_home: yes
+
+    - name: Deadsnakes PPA to get Python 3
       become: yes
       apt_repository:
         repo: 'ppa:deadsnakes/ppa'
@@ -16,11 +25,25 @@
     - name: Make sure required packages are installed
       become: yes
       apt: 
-        pkg: ['nginx', 'git', 'python3.9', 'python3.9-venv', 'gettext', 'postgresql', 'postgresql-contrib']
+        pkg: [
+          'nginx', 'git', 'python3', 'python3-venv', 'gettext', 
+          'postgresql', 'postgresql-contrib', 'python3-pip', 
+          'libpq-dev', 'postgresql-server-dev-all']
         state: present
         update_cache: yes
 
+    - name: Create a directory for the site
+      become: yes
+      file:
+        path: "/home/{{ ansible_user }}/sites/{{ host }}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0755'
+
     - name: Download code from GitHub
+      # become: yes
+      become_user: "{{ ansible_user }}"
       ansible.builtin.git:
         repo: https://github.com/alexchevsky/smysl-io.git
         dest: /home/{{ ansible_user }}/sites/{{ host }}
@@ -29,29 +52,30 @@
       pip:
         requirements: /home/{{ ansible_user }}/sites/{{ host }}/requirements.txt
         virtualenv: /home/{{ ansible_user }}/sites/{{ host }}/venv/
-        virtualenv_command: /usr/bin/python3.9 -m venv
+        virtualenv_command: /usr/bin/python3 -m venv
 
-    - name: Ensure PostgreSQL is running
+    - name: Check if the database exists
       become: yes
-      service:
-        name: postgresql
-        state: started
-        enabled: yes
+      shell: sudo -u postgres psql -tAc "SELECT 1 FROM pg_database WHERE datname='smysl'"
+      register: db_exists
+      failed_when: db_exists.stdout != "1" and db_exists.stdout != ""
 
-    - name: Create a database
+    - name: Create a database using shell
       become: yes
-      become_user: postgres
-      postgresql_db:
-        name: "{{ django_db_name }}"
+      shell: sudo -u postgres psql -c "CREATE DATABASE smysl"
+      when: db_exists.stdout != "1"
+
+      # vars:
+      #   ansible_python_interpreter: "/home/{{ ansible_user }}/sites/{{ host }}/venv/bin/python"
 
     - name: Create a database user
       become: yes
-      become_user: postgres
-      postgresql_user:
-        db: "{{ django_db_name }}"
-        name: "{{ django_db_user }}"
-        password: "{{ django_db_password }}"
-        priv: ALL
+      shell: |
+        sudo -u postgres psql -c "CREATE USER {{ django_db_user }} WITH PASSWORD '{{ django_db_password }}';"
+        sudo -u postgres psql -c "ALTER USER {{ django_db_user }} WITH SUPERUSER;"
+      args:
+        executable: /bin/bash
+
 
     - name: Run migrations
       community.general.django_manage:
@@ -60,6 +84,7 @@
         virtualenv: "/home/{{ ansible_user }}/sites/{{ host }}/venv"
 
     - name: Add nginx config to sites-available
+      become: yes
       template: 
         src: ./sites-available.j2
         dest: /etc/nginx/sites-available/{{ host }}
@@ -67,6 +92,7 @@
         - Restart nginx
 
     - name: Add symlink in nginx sites-enabled
+      become: yes
       file:
         src: /etc/nginx/sites-available/{{ host }}
         dest: /etc/nginx/sites-enabled/{{ host }}
@@ -75,6 +101,7 @@
         - Restart nginx
 
     - name: Write gunicorn service script
+      become: yes
       template: 
         src: ./gunicorn.j2
         dest: /etc/systemd/system/gunicorn-{{ host }}.service
@@ -114,12 +141,28 @@
       tags:
         - dotenv
 
-    - name: Restart gunicorn
+    - name: Disable default Nginx site
+      become: yes
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: Reload systemd
+      become: yes
       systemd:
-        name: gunicorn-{{ host }}
         daemon_reload: yes
-        enabled: yes
+
+    - name: Restart Gunicorn service
+      become: yes
+      systemd:
+        name: gunicorn-18.192.48.2.service
         state: restarted
+
+    - name: Reload Nginx to apply changes
+      become: yes
+      systemd:
+        name: nginx
+        state: reloaded
 
   handlers:   
     - name: Restart nginx

@@ -22,7 +22,7 @@ IN_PRODUCTION = os.environ.get('DJANGO_PRODUCTION') == 'true'
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 if 'IS_DJANGO_DEBUG_FALSE' in os.environ:
-    DEBUG = False
+    DEBUG = True #FIXME
     SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
     ALLOWED_HOSTS = [os.environ['SITENAME']]
 else:
